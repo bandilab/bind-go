@@ -12,7 +12,7 @@ func main() {
     bandicoot.URL("http://localhost:12345")
 
     var books []Book
-    if err := b.Get("ListBooks?maxPrice=10.0", &books); err != nil {
+    if err := bandicoot.Get("ListBooks?maxPrice=10.0", &books); err != nil {
         fmt.Printf("error %v", err)
     }
     for _, b := range books {
@@ -25,7 +25,7 @@ Writes can be handled as follows:
 
 ``` go
 books := []Book{Book{Title: "Robinson Crusoe", Pages: 312, Price: 11.21}}
-b.Post("AddBooks", books, nil)
+bandicoot.Post("AddBooks", books, nil)
 ```
 
 See `go doc bandicoot` for more information.

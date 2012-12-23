@@ -22,8 +22,8 @@ const (
 var prefix = ""
 
 // Set the bandicoot URL, e.g.:
-//  b.URL("http://localhost:12345")
-//  b.Get("Ping", nil)
+//  bandicoot.URL("http://localhost:12345")
+//  bandicoot.Get("Ping", nil)
 func URL(p string) {
 	if p[len(p)-1] != '/' {
 		p = p + "/"
@@ -38,7 +38,7 @@ func URL(p string) {
 //    Price real
 //  }
 //  var books []Book
-//  if err := b.Get("ListBooks?maxPrice=10.0", &books); err != nil {
+//  if err := bandicoot.Get("ListBooks?maxPrice=10.0", &books); err != nil {
 //    fmt.Printf("error %v", err)
 //  }
 //  for _, b := range books {
@@ -64,7 +64,7 @@ func Get(fn string, out interface{}) error {
 
 // Call a function using HTTP POST, e.g.:
 //  books := []Book{Book{Title: "Robinson Crusoe", Pages: 312, Price: 11.21}}
-//  b.Post("AddBooks", books, nil)
+//  bandicoot.Post("AddBooks", books, nil)
 func Post(fn string, in []interface{}, out interface{}) error {
 	reqBody, err := marshal(in)
 	if err != nil {
