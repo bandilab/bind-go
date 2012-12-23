@@ -19,16 +19,37 @@ const (
 	String = "string"
 )
 
-var prefix = ""
+var url = ""
+var headers = make(map[string]string, 0)
+
+func call(method, fn string, body io.Reader) (*http.Response, error) {
+	client := &http.Client{}
+	req, err := http.NewRequest(method, url+fn, body)
+	if err != nil {
+		return nil, err
+	}
+
+	for k, v := range headers {
+		req.Header.Add(k, v)
+	}
+
+	return client.Do(req)
+}
 
 // Set the bandicoot URL, e.g.:
 //  bandicoot.URL("http://localhost:12345")
 //  bandicoot.Get("Ping", nil)
-func URL(p string) {
-	if p[len(p)-1] != '/' {
-		p = p + "/"
+func URL(httpURL string) {
+	if httpURL[len(httpURL)-1] != '/' {
+		httpURL = httpURL + "/"
 	}
-	prefix = p
+	url = httpURL
+}
+
+// Set an HTTP header. The headers will be passed to bandicoot on each request.
+//  bandicoot.SetHeader("X-Auth", "123456789")
+func SetHeader(header, value string) {
+	headers[header] = value
 }
 
 // Call a function using HTTP GET, e.g.:
@@ -45,7 +66,7 @@ func URL(p string) {
 //    fmt.Printf("%+v\n", b)
 //  }
 func Get(fn string, out interface{}) error {
-	resp, err := http.Get(prefix + fn)
+	resp, err := call("GET", fn, nil)
 	if err != nil {
 		return err
 	}
@@ -71,7 +92,7 @@ func Post(fn string, in []interface{}, out interface{}) error {
 		return err
 	}
 
-	resp, err := http.Post(prefix+fn, "text/csv", reqBody)
+	resp, err := call("POST", fn, reqBody)
 	if err != nil {
 		return err
 	}
