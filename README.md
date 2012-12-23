@@ -1,4 +1,9 @@
-Bandicoot bindings for [Go](http://golang.org). Here is a sample Go program which reads data from a bandicoot instance running on `http://localhost:12345`:
+Bandicoot bindings for [Go](http://golang.org). To install run:
+``` bash
+$ go get github.com/bandilab/bind-go
+```
+
+Here is a sample Go program which reads data from a bandicoot instance running on `http://localhost:12345`:
 ``` Go
 import "github.com/bandilab/bind-go"
 
@@ -23,7 +28,7 @@ func main() {
 
 Writes can be handled as follows:
 
-``` go
+``` Go
 books := []Book{Book{Title: "Robinson Crusoe", Pages: 312, Price: 11.21}}
 bandicoot.Post("AddBooks", books, nil)
 ```
