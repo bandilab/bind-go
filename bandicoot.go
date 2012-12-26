@@ -198,7 +198,7 @@ func marshalTuple(t interface{}) string {
 	res := ""
 	last := v.NumField() - 1
 	for i := 0; i <= last; i++ {
-		if v.Field(i).Kind() == reflect.Chan {
+		if v.Field(i).Kind() == reflect.Chan || !v.Field(i).CanInterface() {
 			continue
 		}
 
