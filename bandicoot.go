@@ -131,6 +131,10 @@ func marshal(args []interface{}) (io.Reader, error) {
 	return buf, nil
 }
 
+func isPublic(attr string) bool {
+	return unicode.IsUpper(([]rune(attr))[0])
+}
+
 func attrUpper(s string) string {
 	if len(s) == 0 {
 		return s
@@ -179,7 +183,7 @@ func marshalHead(v interface{}) string {
 	last := t.NumField() - 1
 	for i := 0; i <= last; i++ {
 		a := t.Field(i)
-		if a.Type.Kind() == reflect.Chan {
+		if a.Type.Kind() == reflect.Chan || !isPublic(a.Name) {
 			continue
 		}
 

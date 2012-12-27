@@ -10,6 +10,8 @@ type T1 struct {
 	LongAttr int64
 	RealAttr float64
 	StrAttr  string
+
+	private string
 }
 
 func TestSplit(t *testing.T) {
@@ -88,7 +90,7 @@ func TestUnmarshal(t *testing.T) {
 }
 
 func TestMarshal(t *testing.T) {
-	t1 := T1{0, 1, 2.1, "str"}
+	t1 := T1{0, 1, 2.1, "str", ""}
 	t1h := "intAttr,longAttr,realAttr,strAttr\n"
 	t1v := "0,1,2.1,str\n"
 
